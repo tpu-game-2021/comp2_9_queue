@@ -40,13 +40,10 @@ bool enqueue(QUEUE* q, int val)
 	// メモリを使い切ったら先頭アドレスに戻って追加して下さい
 	int he = q->head - q->memory_begin, ta = q->tail - q->memory_begin, me = q->memory_end - q->memory_begin;
 	if (ta + 1 >= me + he) return false;
-	else 
-	{
-		q->memory_begin[ta] = val;
-		ta++;
-		q->tail = ta + q->memory_begin;
-		return true;
-	}
+	q->memory_begin[ta] = val;
+	ta++;
+	q->tail = ta + q->memory_begin;
+	return true;
 }
 	
 
