@@ -26,7 +26,7 @@ int dequeue(QUEUE* q);                            // キューから一つの要
 int dequeue_array(QUEUE* q, int* addr, int num);  // addrにキューからnumの要素を取り出す。取り出せた個数を返す
 
 bool isEmpty(const QUEUE* s);                     // キューが空かどうかを調べる
-int countQueuedElements(const QUEUE* q);          // 挿入されたデータ数を得る
+int countQueuedElements(const QUEUE* q);          // 挿入されたデータ数を得
 int countQueueableElements(const QUEUE* q);       // 挿入可能なデータ数を得る
 
 	// C++ でCのライブラリを使うときのおまじない
