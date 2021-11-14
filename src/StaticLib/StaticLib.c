@@ -11,6 +11,7 @@ void initialize(QUEUE* q, size_t mem_size)
 	if (q == NULL) return;
 
 	q->memory_begin = (int*)malloc(mem_size);
+	if (q->memory_begin == NULL)return;
 	q->memory_end = q->memory_begin + mem_size / sizeof(int);
 	q->head = q->memory_begin;
 	q->tail = q->memory_begin;
@@ -37,10 +38,17 @@ bool enqueue(QUEUE* q, int val)
 	// ToDo: valのデータをキューに追加します
 	// 上手くいかない場合にはfalseを返します
 	// メモリを使い切ったら先頭アドレスに戻って追加して下さい
+	if (q == NULL)return false;
+	if (q->tail + 1 > q->memory_end)return false;
 
-	return false;
+	if (*q->tail != NULL) {
+		*q->tail = val;
+		q->tail++;
+	}
+	else return false;
+	if (q->tail >= q->memory_end)q->tail = q->memory_begin;
+	return true;
 }
-
 
 // addrから始まるnum個の整数をキューに入れる。実行の成否を返す
 bool enqueue_array(QUEUE* q, int* addr, int num)
@@ -48,24 +56,42 @@ bool enqueue_array(QUEUE* q, int* addr, int num)
 	// ToDo: addrからnum個のデータをキューに追加します
 	// 上手くいかない場合にはfalseを返します
 	// メモリを使い切ったら先頭アドレスに戻って追加して下さい
-
-	return false;
+	
+	if (q == NULL || addr == NULL || num <= 0)return false;
+	if (q->tail + num > q->memory_end) {
+		return false;
+	}
+	memcpy(q->tail, addr, sizeof(int) * num);
+	q->tail += num;
+	if (q->tail >= q->memory_end && q->memory_begin == NULL)q->tail = q->memory_begin;
+	return true;
 }
 
 // キューから一つの要素を取り出す(不具合時は0を返す)
 int dequeue(QUEUE* q)
 {
 	// ToDo: 先頭のデータを返します
-
-	return 0;
+	if (q == NULL ||q->head==NULL)return 0;
+	if (q->head == q->tail)return 0;
+	
+	return *q->head++;
+	if (q->head >= q->memory_end)q->head = q->memory_begin;
 }
 
 // addrにキューからnumの要素を取り出す。取り出せた個数を返す
 int dequeue_array(QUEUE* q, int* addr, int num)
 {
 	// ToDo: 先頭からnum個のデータをaddrに格納します
+	if (q == NULL || addr == NULL || num <= 0)return 0;
+	if (q->head == q->tail)return 0;
 
-	return 0;
+	if (q->tail-num>q->memory_begin) {
+		num = q->tail - q->memory_begin - 1;
+	}
+	memcpy(addr, q->head, sizeof(int) * num);
+	q->head += num;
+	return num;
+	if (q->head >= q->memory_end)q->head = q->memory_begin;
 }
 
 // キューが空かどうかを調べる
