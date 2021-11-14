@@ -80,6 +80,7 @@ bool isEmpty(const QUEUE* q)
 	if (q == NULL) return false;
 
 	return q->head == q->tail;
+	//分かりません。
 }
 
 static int getMaxCount(const QUEUE* q)
@@ -87,6 +88,7 @@ static int getMaxCount(const QUEUE* q)
 	if (q == NULL || q->memory_begin == NULL) return 0;
 
 	return q->memory_end - q->memory_begin;
+	//分かりません。
 }
 
 // 挿入されたデータ数を得る
