@@ -38,8 +38,35 @@ bool enqueue(QUEUE* q, int val)
 	// 上手くいかない場合にはfalseを返します
 	// メモリを使い切ったら先頭アドレスに戻って追加して下さい
 
-	return false;
+	int a, b, c;
+
+	a = q->memory_end - q->memory_begin;
+
+	b = q->tail - q->memory_begin;
+
+	c = q->memory_end - q->memory_begin;
+
+
+	if (q == NULL)
+	{
+		return false;
+	}
+	if (b + 1 >= a + c)
+	{
+		return false;
+	}
+
+	q->memory_begin[b] = val;
+	b++;
+	q->tail = b + q->memory_begin;
+
+	return true;
+
 }
+
+	
+
+
 
 
 // addrから始まるnum個の整数をキューに入れる。実行の成否を返す
@@ -57,7 +84,27 @@ int dequeue(QUEUE* q)
 {
 	// ToDo: 先頭のデータを返します
 
-	return 0;
+	int a, b, c, d;
+
+	a = q->memory_end - q->memory_begin;
+
+	b = q->tail - q->memory_begin;
+
+	c = q->memory_end - q->memory_begin;
+
+	if (q->head == q->tail)
+	{
+		return 0;
+	}
+	else
+	{
+		d = q->head;
+		q->head++;
+		return d;
+	}
+
+
+	
 }
 
 // addrにキューからnumの要素を取り出す。取り出せた個数を返す
