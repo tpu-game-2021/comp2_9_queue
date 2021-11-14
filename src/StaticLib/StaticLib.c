@@ -4,7 +4,6 @@
 
 #include "../include/lib_func.h"
 
-
 // mem_size の容量でキュー用のメモリを確保する
 void initialize(QUEUE* q, size_t mem_size)
 {
@@ -37,8 +36,15 @@ bool enqueue(QUEUE* q, int val)
 	// ToDo: valのデータをキューに追加します
 	// 上手くいかない場合にはfalseを返します
 	// メモリを使い切ったら先頭アドレスに戻って追加して下さい
+	if (q == NULL || val == NULL) return false;
+	*q->head = val;
+	q->head++;
+	if (q->head == q->memory_end)
+	{
+		q->head = q->memory_begin;
+	}
+	return true;
 
-	return false;
 }
 
 
@@ -48,24 +54,52 @@ bool enqueue_array(QUEUE* q, int* addr, int num)
 	// ToDo: addrからnum個のデータをキューに追加します
 	// 上手くいかない場合にはfalseを返します
 	// メモリを使い切ったら先頭アドレスに戻って追加して下さい
-
-	return false;
+	if (q == NULL || num <= 0 || addr == NULL) return false;
+	
+	int* x;
+	for()
+	for (int i = 0; i < num; i++)
+	{
+		*q->head = addr[i];
+		q->head++;
+		if (q->head == q->memory_end)
+		{
+			q->head = q->memory_begin;
+		}
+	}
+	return true;
 }
 
 // キューから一つの要素を取り出す(不具合時は0を返す)
 int dequeue(QUEUE* q)
 {
 	// ToDo: 先頭のデータを返します
-
-	return 0;
+	int val;
+	if (q == NULL) return 0;
+	if (q->tail == q->head)return 0;
+	val = *q->tail;
+	q->tail++;
+	return val;
 }
 
 // addrにキューからnumの要素を取り出す。取り出せた個数を返す
 int dequeue_array(QUEUE* q, int* addr, int num)
 {
 	// ToDo: 先頭からnum個のデータをaddrに格納します
-
-	return 0;
+	int count = 0;
+	if (q == NULL || num <= 0 || addr == NULL) return 0;
+	
+	for (int i = 0; i < num; i++)
+	{
+		if (q->tail == q->memory_end)
+		{
+			return count;
+		}
+		addr[i] = *q->tail;
+		q->tail++;
+		count++;
+	}
+	return count;
 }
 
 // キューが空かどうかを調べる
