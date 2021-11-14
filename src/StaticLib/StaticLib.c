@@ -38,6 +38,11 @@ bool enqueue(QUEUE* q, int val)
 	// 上手くいかない場合にはfalseを返します
 	// メモリを使い切ったら先頭アドレスに戻って追加して下さい
 
+	int x, y, z;
+	x = q->head - q->memory_begin;
+	y = q->tail - q->memory_begin;
+	z = q->memory_end - q->memory_begin;
+
 	return false;
 }
 
@@ -49,6 +54,11 @@ bool enqueue_array(QUEUE* q, int* addr, int num)
 	// 上手くいかない場合にはfalseを返します
 	// メモリを使い切ったら先頭アドレスに戻って追加して下さい
 
+	int x, y, z, i;
+	x = q->head - q->memory_begin;
+	y = q->tail - q->memory_begin;
+	z = q->memory_end - q->memory_begin;
+
 	return false;
 }
 
@@ -56,6 +66,16 @@ bool enqueue_array(QUEUE* q, int* addr, int num)
 int dequeue(QUEUE* q)
 {
 	// ToDo: 先頭のデータを返します
+
+	return 0;
+	if (q == NULL || q->head < 0) return 0;
+
+	int x, y, num;
+	x = q->head - q->memory_begin;
+	y = q->tail - q->memory_begin;
+
+	q->head = x + q->memory_begin;
+	return num;
 
 	return 0;
 }
