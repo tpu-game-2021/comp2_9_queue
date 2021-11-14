@@ -23,6 +23,7 @@ void finalize(QUEUE* q)
 	if (q == NULL) return;
 
 	free(q->memory_begin);
+	//分かりません。
 
 	q->memory_begin = NULL;
 	q->memory_end = NULL;
@@ -37,6 +38,7 @@ bool enqueue(QUEUE* q, int val)
 	// ToDo: valのデータをキューに追加します
 	// 上手くいかない場合にはfalseを返します
 	// メモリを使い切ったら先頭アドレスに戻って追加して下さい
+	//分かりません。
 
 	return false;
 }
@@ -48,6 +50,7 @@ bool enqueue_array(QUEUE* q, int* addr, int num)
 	// ToDo: addrからnum個のデータをキューに追加します
 	// 上手くいかない場合にはfalseを返します
 	// メモリを使い切ったら先頭アドレスに戻って追加して下さい
+	//分かりません。
 
 	return false;
 }
@@ -56,6 +59,7 @@ bool enqueue_array(QUEUE* q, int* addr, int num)
 int dequeue(QUEUE* q)
 {
 	// ToDo: 先頭のデータを返します
+	//分かりません。
 
 	return 0;
 }
@@ -64,6 +68,8 @@ int dequeue(QUEUE* q)
 int dequeue_array(QUEUE* q, int* addr, int num)
 {
 	// ToDo: 先頭からnum個のデータをaddrに格納します
+	//分かりません。
+
 
 	return 0;
 }
