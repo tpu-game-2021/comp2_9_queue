@@ -100,6 +100,7 @@ bool enqueue_array(QUEUE* q, int* addr, int num)
 		b++;
 		q->tail = b + q->memory_begin;
 	}
+	return true;
 }
 
 // キューから一つの要素を取り出す(不具合時は0を返す)
@@ -139,17 +140,17 @@ int dequeue_array(QUEUE* q, int* addr, int num)
 		return 0;
 	}
 
-	int a, b;
+	int a, b,i;
 
 	a = q->head - q->memory_begin;
 
 	b = q->tail - q->memory_begin;
 
-	for (int i = 0; i < num; i++)
+	for ( i = 0; i < num; i++)
 	{
 		if (a >= b)
 		{
-			return i;
+          return i;
 		}
 
 		addr[i] = q->memory_begin[a];
@@ -158,8 +159,6 @@ int dequeue_array(QUEUE* q, int* addr, int num)
 	}
 
 	return num;
-
-	
 }
 
 // キューが空かどうかを調べる
