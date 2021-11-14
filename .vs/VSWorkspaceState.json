@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\ConsoleApplication",
+    "\\src\\include",
+    "\\src\\StaticLib",
+    "\\src\\UnitTest"
+  ],
+  "SelectedNode": "\\src\\UnitTest\\UnitTest.cpp",
+  "PreviewInSolutionExplorer": false
+}
