@@ -149,7 +149,7 @@ namespace UnitTest
 
 			Assert::IsTrue(enqueue(&q, 31), _T("31を入れるのに成功する"));
 			int a[2] = { -1, -2 };
-			//Assert::IsFalse(enqueue_array(&q, a, 2), _T("2要素を入れるのに失敗する"));
+			Assert::IsFalse(enqueue_array(&q, a, 2), _T("2要素を入れるのに失敗する"));
 			Assert::IsTrue(enqueue(&q, 37), _T("37を入れるのに成功する"));
 			int b[2];
 			Assert::AreEqual(dequeue(&q), 31, _T("先頭から格納されることを想定"));

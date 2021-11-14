@@ -44,7 +44,6 @@ bool enqueue(QUEUE* q, int val)
 		q->head = q->memory_begin;
 	}
 	return true;
-
 }
 
 
@@ -56,8 +55,6 @@ bool enqueue_array(QUEUE* q, int* addr, int num)
 	// メモリを使い切ったら先頭アドレスに戻って追加して下さい
 	if (q == NULL || num <= 0 || addr == NULL) return false;
 	
-	int* x;
-	for()
 	for (int i = 0; i < num; i++)
 	{
 		*q->head = addr[i];
