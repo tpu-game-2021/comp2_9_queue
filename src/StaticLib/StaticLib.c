@@ -70,6 +70,7 @@ bool enqueue_array(QUEUE* q, int* addr, int num)
 	{
 		return false;
 	}
+	
 	int x, y, z;
 	x = q->head - q->memory_begin;
 	y = q->tail - q->memory_begin;
