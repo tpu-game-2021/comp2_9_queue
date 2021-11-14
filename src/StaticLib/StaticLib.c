@@ -37,8 +37,24 @@ bool enqueue(QUEUE* q, int val)
 	// ToDo: valのデータをキューに追加します
 	// 上手くいかない場合にはfalseを返します
 	// メモリを使い切ったら先頭アドレスに戻って追加して下さい
+	if (q == NULL)
+	{
+		return false;
+	}
 
-	return false;
+	int x, y, z;
+
+	x = q->head - q->memory_begin;
+	y = q->tail - q->memory_begin;
+	z = q->memory_end - q->memory_begin;
+	if (y + 1 >= x + z)
+	{
+		return false;
+	}
+	q->memory_begin[y] = val;
+	y++;
+	q->tail = y + q->memory_begin;
+	return true;
 }
 
 
