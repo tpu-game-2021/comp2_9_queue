@@ -34,38 +34,68 @@ void finalize(QUEUE* q)
 // valの値をキューに入れる。実行の成否を返す
 bool enqueue(QUEUE* q, int val)
 {
-	// ToDo: valのデータをキューに追加します
-	// 上手くいかない場合にはfalseを返します
-	// メモリを使い切ったら先頭アドレスに戻って追加して下さい
+	if (q == NULL || q->memory_begin == NULL) return false;
 
-	return false;
+	if (countQueueableElements(q) < 1) return false;
+
+	*q->head++ = val;
+
+	if (q->memory_end <= q->head) q->head -= (q->memory_end - q->memory_begin);
+
+	return true;
 }
 
 
 // addrから始まるnum個の整数をキューに入れる。実行の成否を返す
 bool enqueue_array(QUEUE* q, int* addr, int num)
 {
-	// ToDo: addrからnum個のデータをキューに追加します
-	// 上手くいかない場合にはfalseを返します
-	// メモリを使い切ったら先頭アドレスに戻って追加して下さい
+	if (q == NULL || q->memory_begin == NULL || addr == NULL || num <= 0) return false;
+	if (countQueueableElements(q) < num) return false;
 
-	return false;
+	if (q->head + num < q->memory_end) {
+		memcpy(q->head, addr, sizeof(int) * num);
+		q->head += num;
+	}
+	else {
+		int n = q->memory_end - q->head;
+		memcpy(q->head, addr, sizeof(int) * n);
+		memcpy(q->memory_begin, addr + n, sizeof(int) * (num - n));
+		q->head = q->memory_begin + (num - n);
+	}
+
+	return true;
 }
 
 // キューから一つの要素を取り出す(不具合時は0を返す)
 int dequeue(QUEUE* q)
 {
-	// ToDo: 先頭のデータを返します
+	if (q == NULL || q->memory_begin == NULL) return 0;
+	if (isEmpty(q)) return 0;
 
-	return 0;
+	return *q->tail++;
 }
 
 // addrにキューからnumの要素を取り出す。取り出せた個数を返す
 int dequeue_array(QUEUE* q, int* addr, int num)
 {
-	// ToDo: 先頭からnum個のデータをaddrに格納します
+	if (q == NULL || q->memory_begin == NULL || addr == NULL || num <= 0) return 0;
+	if (isEmpty(q)) return 0;
 
-	return 0;
+	int n = countQueuedElements(q);
+	if (n < num) num = n;
+
+	if (q->tail + num < q->memory_end) {
+		memcpy(addr, q->tail, sizeof(int) * num);
+		q->tail += num;
+	}
+	else {
+		int n = q->memory_end - q->tail;
+		memcpy(addr, q->tail, sizeof(int) * n);
+		memcpy(addr, q->memory_begin, sizeof(int) * (num - n));
+		q->tail = q->memory_begin + (num - n);
+	}
+
+	return num;
 }
 
 // キューが空かどうかを調べる
@@ -76,24 +106,19 @@ bool isEmpty(const QUEUE* q)
 	return q->head == q->tail;
 }
 
-static int getMaxCount(const QUEUE* q)
-{
-	if (q == NULL || q->memory_begin == NULL) return 0;
-
-	return q->memory_end - q->memory_begin;
-}
-
 // 挿入されたデータ数を得る
 int countQueuedElements(const QUEUE* q)
 {
 	if (q == NULL || q->memory_begin == NULL) return 0;
 
-	int max_counts = getMaxCount(q);
+	int max_counts = q->memory_end - q->memory_begin;
 	return (q->head + max_counts - q->tail) % max_counts;
 }
 
 // 挿入可能なデータ数を得る
 int countQueueableElements(const QUEUE* q)
 {
-	return getMaxCount(q) - countQueuedElements(q) - 1;
+	int max_counts = q->memory_end - q->memory_begin;
+	return max_counts - countQueuedElements(q) - 1;
+
 }
